@@ -110,7 +110,7 @@ pub enum RestError {
         #[from]
         source: AuthError,
     },
-    #[error("communication with gitlab: {}", source)]
+    #[error("communication with alpaca: {}", source)]
     Communication {
         #[from]
         source: reqwest::Error,
@@ -129,7 +129,7 @@ impl crate::client::RestClient for Alpaca {
 
     fn rest_endpoint(&self, endpoint: &str) -> Result<Url, ApiError<Self::Error>> {
         println!("{}", endpoint);
-        debug!(target: "gitlab", "REST api call {}", endpoint);
+        debug!(target: "alpaca", "REST api call {}", endpoint);
         Ok(self.rest_url.join(endpoint)?)
     }
 }
