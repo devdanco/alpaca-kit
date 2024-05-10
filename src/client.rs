@@ -6,7 +6,7 @@ use http::request::Builder as RequestBuilder;
 use http::Response;
 use bytes::Bytes;
 
-/// A trait representing a client which can communicate with a GitLab instance via REST.
+/// A trait representing a client which can communicate with a Alpaca instance via REST.
 pub trait RestClient {
     /// The errors which may occur for this client.
     type Error: Error + Send + Sync + 'static;
@@ -23,7 +23,7 @@ pub trait RestClient {
     }
 }
 
-/// A trait representing a client which can communicate with a GitLab instance.
+/// A trait representing a client which can communicate with a Alpaca instance.
 pub trait Client: RestClient {
     /// Send a REST query.
     fn rest(
