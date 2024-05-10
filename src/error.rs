@@ -68,7 +68,7 @@ pub enum ApiError<E>
         data: Vec<u8>,
     },
 
-    /// JSON deserialization from GitLab failed.
+    /// JSON deserialization from Alpaca failed.
     #[error("could not parse JSON response: {}", source)]
     Json {
         /// The source of the error.
