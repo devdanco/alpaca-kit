@@ -74,7 +74,6 @@ impl Alpaca {
         auth: &Auth,
     ) -> Result<HttpResponse<Bytes>, ApiError<<Self as crate::client::RestClient>::Error>> {
         let call = || -> Result<_, RestError> {
-            println!("Am I here");
             auth.set_header(request.headers_mut().unwrap())?;
             let http_request = request.body(body)?;
             let request = http_request.try_into()?;
@@ -128,7 +127,6 @@ impl crate::client::RestClient for Alpaca {
     type Error = RestError;
 
     fn rest_endpoint(&self, endpoint: &str) -> Result<Url, ApiError<Self::Error>> {
-        println!("{}", endpoint);
         debug!(target: "alpaca", "REST api call {}", endpoint);
         Ok(self.rest_url.join(endpoint)?)
     }
@@ -140,7 +138,6 @@ impl crate::client::Client for Alpaca {
         request: Builder,
         body: Vec<u8>,
     ) -> Result<HttpResponse<Bytes>, ApiError<Self::Error>> {
-        println!("{:#?}", request);
         self.rest_auth(request, body, &self.auth)
     }
 }

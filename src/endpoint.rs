@@ -13,9 +13,7 @@ use crate::query::Query;
 #[non_exhaustive]
 pub enum UrlBase {
     /// An endpoint uses the API v4 URL prefix.
-    ApiV2,
-    /// An endpoint acts on the instance itself.
-    Instance,
+    ApiV2
 }
 
 impl UrlBase {
@@ -25,8 +23,7 @@ impl UrlBase {
             C: RestClient,
     {
         match self {
-            UrlBase::ApiV2 => client.rest_endpoint(endpoint),
-            UrlBase::Instance => client.instance_endpoint(endpoint),
+            UrlBase::ApiV2 => client.rest_endpoint(endpoint)
         }
     }
 }
@@ -113,10 +110,9 @@ impl<E, T, C> Query<T, C> for E
             return Err(ApiError::server_error(status, rsp.body()));
         } else if status == http::StatusCode::MOVED_PERMANENTLY {
             return Err(ApiError::moved_permanently(
-                rsp.headers().get(http::header::LOCATION),
+                rsp.headers().get(header::LOCATION),
             ));
         }
-
         serde_json::from_value::<T>(v).map_err(ApiError::data_type::<T>)
     }
 }

@@ -1,12 +1,11 @@
 use std::error::Error;
 use url::Url;
-use crate::endpoint::UrlBase;
 use crate::error::ApiError;
 use http::request::Builder as RequestBuilder;
 use http::Response;
 use bytes::Bytes;
 
-/// A trait representing a client which can communicate with a Alpaca instance via REST.
+/// A trait representing a client which can communicate with an Alpaca instance via REST.
 pub trait RestClient {
     /// The errors which may occur for this client.
     type Error: Error + Send + Sync + 'static;
@@ -15,15 +14,9 @@ pub trait RestClient {
     ///
     /// This method adds the hostname for the client's target instance.
     fn rest_endpoint(&self, endpoint: &str) -> Result<Url, ApiError<Self::Error>>;
-
-    /// Get the URL for an instance endpoint for the client.
-    fn instance_endpoint(&self, endpoint: &str) -> Result<Url, ApiError<Self::Error>> {
-        let _ = endpoint;
-        Err(ApiError::unsupported_url_base(UrlBase::Instance))
-    }
 }
 
-/// A trait representing a client which can communicate with a Alpaca instance.
+/// A trait representing a client which can communicate with an Alpaca instance.
 pub trait Client: RestClient {
     /// Send a REST query.
     fn rest(
